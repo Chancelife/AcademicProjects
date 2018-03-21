@@ -1,3 +1,4 @@
 # AcademicProjects
 Project Collection
-#### BerkeleyX: CS188-SU16 Artificial Intelligence - Berkeley (Summer 2016)
+#### Berkeley CS188-SU16 Artificial Intelligence - Berkeley (Summer 2016)
+#### Northeastern INFO7390 Advances in Data Sciences and Architecture (Fall 2017)
