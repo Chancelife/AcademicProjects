@@ -42,16 +42,18 @@ public class MagicTower {
 	
 	private int X;
 	private int Y;
+	private int step;
 	private boolean hasKey = false;
 	private boolean foundGate = false;
 	private boolean openGate = false;
+	private boolean success = false;
 	
 	private int CHECKPOINTS = 0;
 	
 	private static short[][] MAP 
 	= {{W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W},
 	   {W,0,F,D,F,0,F,0,F,7,W,0,0,0,0,0,W,F,F,W},
-	   {W,0,F,0,F,0,F,0,F,0,W,0,W,W,W,0,W,F,F,W},
+	   {W,0,F,0,W,0,F,0,W,0,W,0,W,W,W,0,W,F,F,W},
 	   {W,0,F,6,F,0,F,0,F,0,W,0,0,0,W,0,W,0,0,W},
 	   {W,0,W,0,0,0,0,0,0,0,W,0,W,0,W,0,0,W,0,W},
 	   {W,0,W,W,W,W,5,W,W,W,W,0,W,0,W,0,0,W,0,W},
@@ -64,18 +66,57 @@ public class MagicTower {
 	   {W,0,0,0,0,0,0,W,0,0,0,0,0,W,0,W,0,W,0,W},
 	   {W,0,W,0,W,W,0,W,0,0,0,0,0,W,0,W,0,W,0,W},
 	   {W,0,W,0,W,0,0,W,W,W,W,W,W,W,0,W,0,0,0,W},
-	   {W,0,F,0,W,0,W,W,W,F,F,F,F,W,0,W,W,W,W,W},
+	   {W,0,F,0,W,0,W,W,W,F,W,W,F,W,0,W,W,W,W,W},
 	   {W,0,F,0,W,0,W,0,0,0,0,0,5,0,0,0,0,0,0,W},
-	   {W,0,3,0,5,0,W,W,W,0,W,0,W,0,W,W,W,W,0,W},
+	   {W,0,F,0,0,5,W,W,W,5,W,0,W,0,W,W,W,W,0,W},
 	   {W,0,0,0,W,0,0,0,0,0,W,0,W,0,0,0,0,0,S,W},
 	   {W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W}};
 	
+//	private static short[][] MAP 
+//	= {{W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W},
+//	   {W,0,F,D,F,0,F,0,F,0,W,0,0,0,0,0,W,F,F,W},
+//	   {W,0,F,0,W,0,F,0,W,0,W,0,W,W,W,0,W,F,F,W},
+//	   {W,0,F,0,F,0,F,0,F,0,W,0,0,0,W,0,W,0,0,W},
+//	   {W,0,W,0,0,0,0,0,0,0,W,0,W,0,W,0,0,W,0,W},
+//	   {W,0,W,W,W,W,5,W,W,W,W,0,W,0,W,0,0,W,0,W},
+//	   {W,0,0,W,0,0,0,0,0,0,0,0,W,0,W,W,0,W,0,W},
+//	   {W,W,0,0,0,F,F,0,F,F,0,0,W,W,W,F,0,F,0,W},
+//	   {W,0,0,W,0,F,F,0,F,F,0,0,0,0,0,0,0,0,0,W},
+//	   {W,W,W,W,W,W,W,0,W,W,0,0,W,W,0,W,W,W,W,W},
+//	   {W,0,0,0,0,0,0,0,W,W,0,W,W,0,0,0,0,0,0,W},
+//	   {W,W,5,W,W,W,W,W,0,0,0,0,0,W,W,W,0,W,0,W},
+//	   {W,0,0,0,0,0,0,W,0,0,0,0,0,W,0,W,0,W,0,W},
+//	   {W,0,W,0,W,W,0,W,0,0,0,0,0,W,0,W,0,W,0,W},
+//	   {W,0,W,0,W,0,0,W,W,W,W,W,W,W,0,W,0,0,0,W},
+//	   {W,0,F,0,W,0,W,W,W,F,W,W,F,W,0,W,W,W,W,W},
+//	   {W,0,F,0,W,0,W,0,0,0,0,0,5,0,0,0,0,0,0,W},
+//	   {W,0,F,0,0,5,W,W,W,5,W,0,W,0,W,W,W,W,0,W},
+//	   {W,0,0,0,W,0,0,0,0,0,W,0,W,0,0,0,0,0,S,W},
+//	   {W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W}};
+	
 	private static Position[][] TRACE;
+	
+	public int getX() {
+		return this.X;
+	}
+	public int getY() {
+		return this.Y;
+	}
+	public boolean foundGate() {
+		return foundGate;
+	}
+	public boolean openGate() {
+		return openGate;
+	}
+	public boolean getKey() {
+		return hasKey;
+	}
 	
 	public MagicTower() {
 		// statr position
 		this.X = 18;
 		this.Y = 18;
+		this.step = 0;
 		TRACE = new Position[MAZESIZE][MAZESIZE];
 		for(int i=0;i<MAZESIZE;i++) {
 			for(int j=0;j<MAZESIZE;j++) {
@@ -90,12 +131,12 @@ public class MagicTower {
 		bfs(1,9,K);
 		bfs(3,3,G);
 		
-		for(int i=0;i<MAZESIZE;i++) {
-			System.out.println("");
-			for(int j=0;j<MAZESIZE;j++) {
-				System.out.printf("%3d ",TRACE[i][j].disFromKey);
-			}
-		}
+//		for(int i=0;i<MAZESIZE;i++) {
+//			System.out.println("");
+//			for(int j=0;j<MAZESIZE;j++) {
+//				System.out.printf("%3d ",TRACE[i][j].disFromKey);
+//			}
+//		}
 	}
 	
 	/**
@@ -132,6 +173,12 @@ public class MagicTower {
 		}
 		return pathLength;
 	}
+	
+//	private boolean adj(int x, int y) {
+//		
+//		
+//		return ;
+//	}
 	
 	private ArrayList<Position> adj(Position p, int mark) {
 		ArrayList<Position> positions = new ArrayList<>();
@@ -186,6 +233,7 @@ public class MagicTower {
 	 */
 	public int getStatus(int dx, int dy) {
 		if(moveToNext(this.X+dx,this.Y+dy)) {
+			this.step++;
 			this.X += dx;
 			this.Y += dy;
 			if(MAP[this.X][this.Y]==0) return 0;
@@ -205,11 +253,18 @@ public class MagicTower {
 				} else {
 					this.X -= dx;
 					this.Y -= dy;
+					foundGate = true;
 					return 1;
 				}
 			}
-			if(MAP[this.X][this.Y]==7) return 2;
-			if(MAP[this.X][this.Y]==9) return 3; 
+			if(MAP[this.X][this.Y]==7)  {
+				this.hasKey = true;
+				return 2;
+			}
+			if(MAP[this.X][this.Y]==9) {
+				this.success = true;
+				return 3; 
+			}
 		} else {
 			return 0;
 		}
@@ -220,26 +275,30 @@ public class MagicTower {
 	
 	private boolean moveToNext(int x, int y) {
 		switch (MAP[x][y]) {
-			case 0: case F: case 5: case 7: case 9:
+			case 0: case F: case 5: case 9:
+				return true;
+			case 7:
 				return true;
 			case W:
 				return false;
 			case 6:
-				foundGate = true;
 				return true;
 		}
 		return false;
 	}
 	
-	public int fitnessFunction() {
-		int score = 0;
-		score += this.CHECKPOINTS * 20;
-		score += this.foundGate ? 100 : 2*(50/TRACE[this.X][this.Y].disFromGate);
+	public double fitnessFunction() {
+		double score = 0.00;
+		// score += this.CHECKPOINTS * 20;
+		score += this.foundGate ? 1000 : 500*(1/(double)(TRACE[this.X][this.Y].disFromGate+1));
 		if(this.foundGate) {
-			score += this.hasKey ? 100 : 2*(50/TRACE[this.X][this.Y].disFromKey);
+			score += this.hasKey ? 1000 : 500*(1/(double)(TRACE[this.X][this.Y].disFromKey+1));
 		}
 		if(this.hasKey) {
-			score += this.openGate ? 100 : 2*(50/TRACE[this.X][this.Y].disFromGate);
+			score += this.openGate ? 1000 : 500*(1/(double)(TRACE[this.X][this.Y].disFromGate+1));
+		}
+		if(this.openGate) {
+			score += this.success ? 1000 : 500*(1/(double)(TRACE[this.X][this.Y].disFromEnd+1));
 		}
 		return score;
 	}
