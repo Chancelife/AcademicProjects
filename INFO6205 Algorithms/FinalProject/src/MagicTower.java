@@ -233,6 +233,9 @@ public class MagicTower {
 	 * return status: 0 alive; -1 died; 1 find gate without key; 2 find key; F complete
 	 */
 	public int getStatus(int dx, int dy) {
+		if(this.X+dx <0 || this.X+dx>=MAZESIZE || this.Y+dy>=MAZESIZE || this.Y+dy<0) {
+			return -1;
+		}
 		if(moveToNext(this.X+dx,this.Y+dy)) {
 			this.step++;
 			this.X += dx;
@@ -249,6 +252,7 @@ public class MagicTower {
 			}
 			if(MAP[this.X][this.Y]==6) {
 				if(this.hasKey) {
+					this.foundGate = true;
 					this.openGate = true;
 					return 0;
 				} else {
