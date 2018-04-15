@@ -9,6 +9,7 @@ public class Generic implements Comparable {
 	private int step = 0;
 	private int diedStep;
 	private boolean alive = true;
+	private static final int gLength = 200;
 	MagicTower mt = new MagicTower();
 
 	public boolean isAlive() {
@@ -48,7 +49,7 @@ public class Generic implements Comparable {
 	}
 
 	public Generic() {
-		genearr = new Gene[100];
+		genearr = new Gene[gLength];
 		state = 0;
 	}
 	
@@ -66,9 +67,9 @@ public class Generic implements Comparable {
 //			this.state = 1;
 		
 		// generate new generic from parents
-		genearr = new Gene[100];
+		genearr = new Gene[gLength];
 		
-		for (int i = 0; i < 100; i++) {
+		for (int i = 0; i < gLength; i++) {
 			if(i < father.diedStep) {
 				if (father.genearr[i].getGene() == mother.genearr[i].getGene()) {
 					this.genearr[i] = father.genearr[i];
@@ -106,7 +107,7 @@ public class Generic implements Comparable {
 	}
 
 	public void Move() {
-		while (this.state >= 0 && this.step < 100 && this.isAlive()) {
+		while (this.state >= 0 && this.step < gLength && this.isAlive()) {
 			switch (this.getGenearr()[step].getGene()) {
 				case 0:
 					this.state = mt.getStatus(1, 0);
@@ -129,7 +130,7 @@ public class Generic implements Comparable {
 			}
 			if (this.state == -1) {
 				this.alive = false;
-				for(int i=step;i<100;i++) {
+				for(int i=step;i<gLength;i++) {
 					this.genearr[i] = new Gene();
 				}
 				this.diedStep = this.step-1>0?this.step-1:0;

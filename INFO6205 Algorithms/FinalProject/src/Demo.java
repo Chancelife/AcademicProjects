@@ -1,3 +1,10 @@
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.PriorityQueue;
 
@@ -8,13 +15,14 @@ public class Demo {
 	public static final int MAXGENERATION = 20000;
 	public static final int genericInGroup = 100;
 	private static Generic bestOfGeneration;
+	private static double lastscore = 0.00;
 	static PriorityQueue<Generic> pq = new PriorityQueue<>();
 	
 	public static void main(String[] args) { 
 		// Do generation 0;
 		for(int i=0;i<genericInGroup;i++) {
 			Generic generic = new Generic();
-			Gene[] genes = new Gene[100];
+			Gene[] genes = new Gene[200];
 			// System.out.println("No."+i+" status:");
 			for(int j=0;j<generic.getGenearr().length;j++) {
 				genes[j] = new Gene();
@@ -38,7 +46,12 @@ public class Demo {
 				GENERATION, bestOfGeneration.mt.getX(), bestOfGeneration.mt.getY(), bestOfGeneration.getState(), bestOfGeneration.getScore(), 
 				bestOfGeneration.mt.foundGate(), bestOfGeneration.mt.getKey(), bestOfGeneration.mt.openGate());
 			doNextGen();
-		}while(bestOfGeneration.getState()!=3||GENERATION<MAXGENERATION);
+			Generic best = pq.peek();
+			if(best.getScore() > lastscore) {
+				lastscore = best.getScore();
+				doLog(best, "utf-8");
+			}
+		}while(!(bestOfGeneration.getState()==3)&&GENERATION<MAXGENERATION);
 	}
 	
 	public static void doNextGen() {
@@ -64,5 +77,41 @@ public class Demo {
 		parents.clear();
 		// System.out.println(pq.size());
 		GENERATION += 1;
+	}
+	
+	public static void doLog(Generic generic, String code) {
+		String outputfile = ".\\history\\"+GENERATION+".txt";
+		OutputStreamWriter osw = null;
+		String result = "";
+		for(Gene g: generic.getGenearr()) {
+			result += g.getGene()+",";
+			
+		}
+		try {
+			File file = new File(outputfile);
+			if(!file.exists()){
+				file = new File(file.getParent());
+				if(!file.exists()){
+					file.mkdirs();
+				}
+			}
+			if("asci".equals(code)){
+				code = "utf-8";
+			}
+			osw = new OutputStreamWriter(new FileOutputStream(outputfile),code);
+			osw.write(result);
+			osw.flush();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try{
+				if(osw != null){
+					osw.close();
+				}
+			}catch(IOException e){
+				e.printStackTrace();
+			}
+		}
 	}
 }
