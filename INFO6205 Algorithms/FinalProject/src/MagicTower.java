@@ -1,10 +1,8 @@
 package Final;
+
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
-
-import javax.management.Query;
-import javax.sound.midi.Track;
 
 public class MagicTower {
 	class Position {
@@ -114,7 +112,7 @@ public class MagicTower {
 	}
 	
 	public MagicTower() {
-		// statr position
+		// start position
 		this.X = 18;
 		this.Y = 18;
 		this.step = 0;
@@ -131,13 +129,6 @@ public class MagicTower {
 		bfs(1,3,D);
 		bfs(1,9,K);
 		bfs(3,3,G);
-		
-//		for(int i=0;i<MAZESIZE;i++) {
-//			System.out.println("");
-//			for(int j=0;j<MAZESIZE;j++) {
-//				System.out.printf("%3d ",TRACE[i][j].disFromKey);
-//			}
-//		}
 	}
 	
 	/**
@@ -174,13 +165,6 @@ public class MagicTower {
 		}
 		return pathLength;
 	}
-	
-//	private boolean adj(int x, int y) {
-//		
-//		
-//		return ;
-//	}
-	
 	private ArrayList<Position> adj(Position p, int mark) {
 		ArrayList<Position> positions = new ArrayList<>();
 		if(mark == 6) {
@@ -249,6 +233,7 @@ public class MagicTower {
 			}
 			if(MAP[this.X][this.Y]==6) {
 				if(this.hasKey) {
+					this.foundGate=true;
 					this.openGate = true;
 					return 0;
 				} else {
@@ -275,7 +260,8 @@ public class MagicTower {
 	
 	
 	private boolean moveToNext(int x, int y) {
-		switch (MAP[x][y]) {
+		try{
+			switch (MAP[x][y]) {
 			case 0: case F: case 5: case 9:
 				return true;
 			case 7:
@@ -284,6 +270,9 @@ public class MagicTower {
 				return false;
 			case 6:
 				return true;
+		}
+		}catch(Exception e) {
+			return false;
 		}
 		return false;
 	}
@@ -303,8 +292,4 @@ public class MagicTower {
 		}
 		return score;
 	}
-	
-//	public static void main(String[] args) {
-//		MagicTower mt = new MagicTower();
-//	}
 }
