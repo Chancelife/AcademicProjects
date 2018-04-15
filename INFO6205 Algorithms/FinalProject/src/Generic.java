@@ -1,3 +1,4 @@
+package Final;
 public class Generic implements Comparable {
 	// init state = 0; state=1 means that he knows that he needs a key. state=2
 	// means he has the key. state = 3 means mission complete.
@@ -9,8 +10,8 @@ public class Generic implements Comparable {
 	private int step = 0;
 	private int diedStep;
 	private boolean alive = true;
-	private static final int gLength = 200;
-	MagicTower mt = new MagicTower();
+	private static final int gLength = 150;
+	static MagicTower mt = new MagicTower();
 
 	public boolean isAlive() {
 		return alive;

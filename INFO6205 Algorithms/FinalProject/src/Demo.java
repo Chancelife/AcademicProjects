@@ -1,21 +1,21 @@
 package Final;
 
 import java.util.ArrayList;
-import java.util.PriorityQueue;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.PriorityBlockingQueue;
 
 public class Demo {
 	//public  static int  GENERATION = 0;
 	public static final int MAXGENERATION = 20000;
 	public static final int genericInGroup = 100;
 	private static Generic bestOfGeneration;
-	static PriorityQueue<Generic> pq = new PriorityQueue<>();
+	static PriorityBlockingQueue<Generic> pq = new PriorityBlockingQueue<>();
 	
 	public class GeneTask implements Runnable{
 		int lo;
 		int hi;
-		int generation =0;
+		int generation = 0;
 		String name;
 		public GeneTask(int lo, int hi) {
 			this.lo=lo;

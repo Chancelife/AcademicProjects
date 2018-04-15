@@ -1,3 +1,4 @@
+package Final;
 import java.util.Random;
 
 public class Gene {
