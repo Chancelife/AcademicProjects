@@ -84,8 +84,8 @@ public class Demo {
 					doLog(bestOfGeneration, "utf-8");
 				}
 				System.out.print("Thread: "+Thread.currentThread().getName());
-				System.out.printf(" Generation %5d, Position: %2d,%2d Step: %2d Status:%3d Score:%7.2f FoundGate:%b GetKey:%b OpenGate:%b\n",
-						GENERATION, bestOfGeneration.mt.getX(), bestOfGeneration.mt.getY(),bestOfGeneration.getStep(), bestOfGeneration.getState(), bestOfGeneration.getScore(), 
+				System.out.printf(" Generation %5d, Position: %2d,%2d Status:%3d Score:%7.2f FoundGate:%b GetKey:%b OpenGate:%b\n",
+						GENERATION, bestOfGeneration.mt.getX(), bestOfGeneration.mt.getY(), bestOfGeneration.getState(), bestOfGeneration.getScore(), 
 						bestOfGeneration.mt.foundGate(), bestOfGeneration.mt.getKey(), bestOfGeneration.mt.openGate());
 				doNextGen();	
 			}else

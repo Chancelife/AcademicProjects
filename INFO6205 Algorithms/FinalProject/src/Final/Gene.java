@@ -2,10 +2,10 @@ package Final;
 import java.util.Random;
 
 public class Gene {
-	public static final int up = 0;
-	public static final int left = 1;
-	public static final int down = 2;
-	public static final int right = 3;
+	public static final int DOWN = 0;
+	public static final int LEFT = 1;
+	public static final int UP = 2;
+	public static final int RIGHT = 3;
 	private int gene;
 	
 	public Gene() {

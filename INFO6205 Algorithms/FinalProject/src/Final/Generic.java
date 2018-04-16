@@ -48,6 +48,10 @@ public class Generic implements Comparable {
 	public void setState(int state) {
 		this.state = state;
 	}
+	
+	public void setDiedStep(int x) {
+		this.diedStep = x;
+	}
 
 	public Generic() {
 		genearr = new Gene[gLength];

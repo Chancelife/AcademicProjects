@@ -51,9 +51,10 @@ public class MagicTower {
 	
 	private int CHECKPOINTS = 0;
 	
+	// no checkpoints, 5 is useless
 	private static short[][] MAP 
 	= {{W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W},
-	   {W,0,F,D,F,0,F,0,F,7,W,0,0,0,0,0,W,F,F,W},
+	   {W,0,F,D,F,0,F,0,F,K,W,0,0,0,0,0,W,F,F,W},
 	   {W,0,F,0,W,0,F,0,W,0,W,0,W,W,W,0,W,F,F,W},
 	   {W,0,F,6,F,0,F,0,F,0,W,0,0,0,W,0,W,0,0,W},
 	   {W,0,W,0,0,0,0,0,0,0,W,0,W,0,W,0,0,W,0,W},
@@ -112,6 +113,15 @@ public class MagicTower {
 	public boolean getKey() {
 		return hasKey;
 	}
+	public final short[][] getMap() {
+		return MAP;
+	}
+	public final Position[][] getTrace() {
+		return TRACE;
+	}
+	public final int getStep() {
+		return step;
+	}
 	
 	public MagicTower() {
 		// statr position
@@ -135,7 +145,7 @@ public class MagicTower {
 //		for(int i=0;i<MAZESIZE;i++) {
 //			System.out.println("");
 //			for(int j=0;j<MAZESIZE;j++) {
-//				System.out.printf("%3d ",TRACE[i][j].disFromKey);
+//				System.out.printf("%3d ",TRACE[i][j].disFromGate);
 //			}
 //		}
 	}
